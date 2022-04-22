@@ -8,12 +8,15 @@ services:
     depends_on:
     - db
   db:
-    image: postgres
+    image: postgis/postgis
     environment:
+      - POSTGRESQL_INITSCRIPTS_USERNAME=postgres
+      - POSTGRESQL_INITSCRIPTS_PASSWORD=postgres
       - POSTGRES_ROOT_PASSWORD=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports: 
       - "5432:5432"
     volumes:
+      - ./postgres/data:/data
       - ./postgres/init:/docker-entrypoint-initdb.d

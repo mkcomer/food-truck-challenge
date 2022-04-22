@@ -9,6 +9,6 @@ public interface FoodTruckService {
 
     String getFoodTruck(Integer locationId) throws FoodTruckException;
 
-    List<FoodTruck> getFoodTrucksByLong(Double longitude) throws FoodTruckException;
+    List<FoodTruck> getFoodTrucksByLong(Double longitude, Double latitude) throws FoodTruckException;
     
 }

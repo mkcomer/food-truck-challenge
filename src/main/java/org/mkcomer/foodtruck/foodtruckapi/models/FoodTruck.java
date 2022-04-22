@@ -27,10 +27,11 @@ public class FoodTruck implements Serializable {
     // @Id
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
     // @Column(name = "index")
-    
-    private Long index;
+    @ToString.Exclude
+    private Long id;
     
     // @Column(name = "locationid")
+    @ToString.Exclude
     private Long locationid;
   
     // @Column(name = "applicant")
@@ -43,11 +44,16 @@ public class FoodTruck implements Serializable {
     private String fooditems;
   
     // @Column(name = "latitude")
+    @ToString.Exclude
     private Double latitude;
   
     // @Column(name = "longitude")
+    @ToString.Exclude
     private Double longitude;
   
     // @Column(name = "zipcodes")
     private Double zipcodes;
+
+    @ToString.Exclude
+    private Double geom;
 }

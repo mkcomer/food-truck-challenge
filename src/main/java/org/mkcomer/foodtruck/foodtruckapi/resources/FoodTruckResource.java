@@ -48,11 +48,13 @@ public class FoodTruckResource {
     public String getFoodTrucksByLongitude(@RequestBody Map<String,Object> foodTruckMap){
         
         String longitudeString = (String) foodTruckMap.get("longitude");
-
-        logger.info("Getting food truck by longitude: " + longitudeString);
         Double longitudeDouble = Double.parseDouble(longitudeString);
 
-        List<FoodTruck> returnedTrucks = foodTruckService.getFoodTrucksByLong(longitudeDouble);
+        String latitudeString = (String) foodTruckMap.get("latitude");
+        Double latitudeDouble = Double.parseDouble(latitudeString);
+        logger.info("Getting food truck by longitude: " + longitudeString + " and latitude: " + latitudeString);
+
+        List<FoodTruck> returnedTrucks = foodTruckService.getFoodTrucksByLong(longitudeDouble, latitudeDouble);
 
         String returnData = returnedTrucks.toString();
 

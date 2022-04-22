@@ -9,6 +9,6 @@ public interface FoodTruckRepository {
     
     String findById(Integer locationId) throws FoodTruckException;
 
-    List<FoodTruck> findbyLong(Double longitude) throws FoodTruckException;
+    List<FoodTruck> findbyLong(Double longitude, Double latitude) throws FoodTruckException;
 
 }

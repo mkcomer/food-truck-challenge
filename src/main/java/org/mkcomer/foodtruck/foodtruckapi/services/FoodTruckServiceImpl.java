@@ -26,8 +26,8 @@ public class FoodTruckServiceImpl implements FoodTruckService{
     // 
 
     @Override
-    public List<FoodTruck> getFoodTrucksByLong(Double longitude) throws FoodTruckException {
-        List<FoodTruck> foodTruckList = foodTruckRepository.findbyLong(longitude);
+    public List<FoodTruck> getFoodTrucksByLong(Double longitude, Double latitude) throws FoodTruckException {
+        List<FoodTruck> foodTruckList = foodTruckRepository.findbyLong(longitude, latitude);
         return foodTruckList;
     }
 

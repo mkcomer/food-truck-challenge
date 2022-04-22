@@ -12,10 +12,9 @@ import java.util.List;
 @Repository
 public class FoodTruckRepositoryImpl implements FoodTruckRepository{
 
-
     private static String SQL_FIND_ID = "SELECT applicant FROM trucks WHERE locationid=?";
-    private static String SQL_FIND_LONG = "SELECT * FROM trucks WHERE longitude=?";
-
+    // private static String SQL_NOW = "SELECT * FROM trucks ORDER BY geom <-> ST_GeomFromText ('POINT(longitude=? latitude=?)', 4326)";
+    private static String SQL_NOW = "SELECT applicant, address, fooditems, zipcodes FROM trucks ORDER BY geom <-> ST_GeomFromText ('POINT(-122.4273064 37.7620192)', 4326) LIMIT 5";
     @Autowired
     JdbcTemplate jdbcTemplate;
 
@@ -27,12 +26,14 @@ public class FoodTruckRepositoryImpl implements FoodTruckRepository{
     }
 
     @Override
-    public List<FoodTruck> findbyLong(Double longitude) throws FoodTruckException {
+    public List<FoodTruck> findbyLong(Double longitude, Double latitude) throws FoodTruckException {
         // TODO Auto-generated method stub
         var rowMapper = BeanPropertyRowMapper.newInstance(FoodTruck.class);
-
-        List<FoodTruck> foodTrucks = jdbcTemplate.query(SQL_FIND_LONG, rowMapper, longitude);
+        // TODO parameterize long and lat into sql query
+        List<FoodTruck> foodTrucks = jdbcTemplate.query(SQL_NOW, rowMapper);
 
         return foodTrucks;
     }
+
+
 }

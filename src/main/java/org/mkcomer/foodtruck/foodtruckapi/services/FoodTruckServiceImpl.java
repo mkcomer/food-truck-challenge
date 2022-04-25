@@ -23,11 +23,10 @@ public class FoodTruckServiceImpl implements FoodTruckService{
         String foodTruck = foodTruckRepository.findById(locationId);
         return foodTruck;
     }
-    // 
 
     @Override
-    public List<FoodTruck> getFoodTrucksByLong(Double longitude, Double latitude) throws FoodTruckException {
-        List<FoodTruck> foodTruckList = foodTruckRepository.findbyLong(longitude, latitude);
+    public List<FoodTruck> getFoodTrucksByLocation(Double longitude, Double latitude) throws FoodTruckException {
+        List<FoodTruck> foodTruckList = foodTruckRepository.findbyLongLat(longitude, latitude);
         return foodTruckList;
     }
 

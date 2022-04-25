@@ -9,5 +9,4 @@ public class FoodTruckException extends RuntimeException{
     public FoodTruckException(String message){
         super(message);
     }
-    
 }

@@ -8,7 +8,7 @@ import org.mkcomer.foodtruck.foodtruckapi.models.FoodTruck;
 public interface FoodTruckService {
 
     String getFoodTruck(Integer locationId) throws FoodTruckException;
-
-    List<FoodTruck> getFoodTrucksByLong(Double longitude, Double latitude) throws FoodTruckException;
     
+    List<FoodTruck> getFoodTrucksByLocation(Double longitude, Double latitude) throws FoodTruckException;
+
 }

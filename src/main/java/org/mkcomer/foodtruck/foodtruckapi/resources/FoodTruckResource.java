@@ -1,5 +1,6 @@
 package org.mkcomer.foodtruck.foodtruckapi.resources;
 
+import org.mkcomer.foodtruck.foodtruckapi.exceptions.FoodTruckException;
 import org.mkcomer.foodtruck.foodtruckapi.models.FoodTruck;
 import org.mkcomer.foodtruck.foodtruckapi.services.FoodTruckService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,42 +24,55 @@ public class FoodTruckResource {
     @Autowired
     FoodTruckService foodTruckService;
 
-    @RequestMapping(value="/hello")
-    public String sayHello(){
-        return "Hello";
+    @RequestMapping(value="/healthcheck")
+    public String healthcheck(){
+        return "Food Truck Service Active";
     }
 
-    @PostMapping("foodtrucks")
+    @PostMapping("id")
     public String getFoodTrucks(@RequestBody Map<String,Object> foodTruckMap){
 
-        String locationID = (String) foodTruckMap.get("locationId");
+        String locationID = null;
 
-        logger.info("Getting food truck by ID: " +  locationID);
-        int locationInt =Integer.parseInt(locationID); 
-        
+        if (foodTruckMap !=null && !foodTruckMap.isEmpty()){
+            locationID = (String) foodTruckMap.get("locationId");
+            logger.info("Getting food truck by ID: " +  locationID);     }
+            String foodTruckName = null;
 
-        String foodTruckName = foodTruckService.getFoodTruck(locationInt);
-        // String longitudeString = (String) foodTruckMap.get("long");
-        // String latitudeString = (String) foodTruckMap.get("lat");
+            try{
+                int locationInt =Integer.parseInt(locationID); 
+                foodTruckName = foodTruckService.getFoodTruck(locationInt);
+            }catch(FoodTruckException e){
+                logger.error("Exception thrown querying database: {}", e.toString());
+            }
 
         return foodTruckName;
     }
 
-    @PostMapping("long")
-    public String getFoodTrucksByLongitude(@RequestBody Map<String,Object> foodTruckMap){
+    @PostMapping("location")
+    public String getFoodTrucksByLocation(@RequestBody Map<String,Object> foodTruckMap){
         
-        String longitudeString = (String) foodTruckMap.get("longitude");
-        Double longitudeDouble = Double.parseDouble(longitudeString);
+        String longitudeString = null;
+        String latitudeString = null;
 
-        String latitudeString = (String) foodTruckMap.get("latitude");
-        Double latitudeDouble = Double.parseDouble(latitudeString);
-        logger.info("Getting food truck by longitude: " + longitudeString + " and latitude: " + latitudeString);
+        if (foodTruckMap !=null && !foodTruckMap.isEmpty()){
+            longitudeString= (String) foodTruckMap.get("longitude");
+            latitudeString = (String) foodTruckMap.get("latitude");
+            logger.info("Retrieving foodtrucks near longitude: " + longitudeString + " and latitude: " + latitudeString);
+        }
 
-        List<FoodTruck> returnedTrucks = foodTruckService.getFoodTrucksByLong(longitudeDouble, latitudeDouble);
+        List<FoodTruck> returnList = null;
+        
+        try {
+            Double longitudeDouble = Double.parseDouble(longitudeString);
+            Double latitudeDouble = Double.parseDouble(latitudeString);
+            // returnList = foodTruckService.getFoodTrucksByLong(longitudeDouble, latitudeDouble);
+            returnList = foodTruckService.getFoodTrucksByLocation(longitudeDouble, latitudeDouble);
+        } catch (FoodTruckException e) {
+            logger.error("Exception thrown querying database: {}", e.toString());
+        }
 
-        String returnData = returnedTrucks.toString();
-
-        return returnData;
+        return returnList.toString();
     }
     
 }

@@ -33,3 +33,8 @@ I would recommend using [Postman](https://www.postman.com/downloads/) to test th
 }
 ```
 
+## References
+
+- https://postgis.net/docs/ST_Point.html
+- https://blog.crunchydata.com/blog/postgis-and-the-geography-type
+- https://techcommunity.microsoft.com/t5/azure-database-for-postgresql/take-your-spatial-data-analysis-to-the-next-level-with-postgis/ba-p/1124288

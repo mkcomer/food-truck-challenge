@@ -1,13 +1,7 @@
 version: "2"
 services:
-  test-python:
-    image: test-truck:latest
-    build:
-      context: ./populate-db
-      dockerfile: ./Dockerfile
-    depends_on:
-    - db
-  db:
+  food-truck-db:
+    container_name: db
     image: postgis/postgis
     environment:
       - POSTGRESQL_INITSCRIPTS_USERNAME=postgres
@@ -20,3 +14,11 @@ services:
     volumes:
       - ./postgres/data:/data
       - ./postgres/init:/docker-entrypoint-initdb.d
+  food-truck-api:
+    container_name: food-truck-api
+    image: food-truck-api:latest
+    build:
+      context: ./api
+      dockerfile: ./Dockerfile
+    ports:
+      - "8081:8081"
